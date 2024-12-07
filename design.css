@@ -1,0 +1,48 @@
+body {
+    background-color: #f0f8ff; /* baby blue */
+    color: #000000; /* black */
+    font-family: Arial, sans-serif;
+}
+
+.form-container {
+    background-color: #87ceeb; /* sky blue */
+    color: #ffffff; /* white */
+    padding: 20px;
+    border: 2px solid #000000; /* black */
+    width: 50%;
+    margin: 0 auto;
+}
+
+.message {
+    background-color: #9370db; /* medium purple */
+    color: #ffffff; /* white */
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"],
+button {
+    margin: 5px 0;
+    padding: 8px;
+    border: 1px solid #000000; /* black */
+    border-radius: 5px;
+}
+
+button {
+    background-color: #9370db; /* medium purple */
+    color: #ffffff; /* white */
+    cursor: pointer;
+}
+
+input[type="file"] {
+    padding: 5px;
+}
+
+.profile-picture img {
+    margin-top: 10px;
+    border: 2px solid #000000; /* black */
+    border-radius: 50%;
+}
