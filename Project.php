@@ -5,7 +5,7 @@ session_start();
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$dbname = 'your_database';
+$dbname = 'your_database'; // Change this to your actual database name
 
 $conn = new mysqli($host, $username, $password, $dbname);
 
@@ -14,6 +14,21 @@ if ($conn->connect_error) {
 }
 
 $message = '';
+
+// SQL to create the database and users table (run this in your database)
+ /*
+CREATE DATABASE your_database;
+
+USE your_database;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(255),
+    profile_picture VARCHAR(255)
+);
+*/
 
 // Handle registration
 if (isset($_POST['register'])) {
