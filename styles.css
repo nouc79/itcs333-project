@@ -1,18 +1,21 @@
 /* General Styles */
 body {
-    background-color: #f0f8ff; /* baby blue */
-    color: #000000; /* black */
+    background-image: url('room4.jpg'); /* Set room4.jpg as background */
+    background-size: cover; /* Ensure the background covers the entire page */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent tiling */
+    color: #000000; /* Black text */
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-/* Container */
+/* Container Room browsing */ 
 .container {
-    background-color: #87ceeb; /* sky blue */
-    color: #ffffff; /* white */
+    background-color: #cbd3dc; /* Sky blue with slight transparency */
+    color: #ffffff; /* White text */
     padding: 20px;
-    border: 2px solid #000000; /* black */
+    border: 2px solid #000000; /* Black */
     border-radius: 10px;
     max-width: 900px;
     margin: 50px auto;
@@ -31,7 +34,7 @@ h1 {
 p {
     font-size: 1.1rem;
     line-height: 1.6;
-    color: #ffffff; /* White text */
+    color: #474748; /* White text */
     margin-bottom: 10px;
 }
 
@@ -41,9 +44,9 @@ strong {
 
 /* Card Styling (index.php) */
 .card {
-    background-color: #9370db; /* medium purple */
-    color: #ffffff; /* white */
-    border: 2px solid #000000; /* black */
+    background-color: rgba(245, 245, 220, 0.85); /* Light beige with slight transparency */
+    color: #000000; /* Black text */
+    border: 2px solid #000000; /* Black */
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -70,9 +73,9 @@ strong {
 button,
 .btn-primary,
 .btn-secondary {
-    background-color: #9370db; /* medium purple */
-    color: #ffffff; /* white */
-    border: 1px solid #000000; /* black */
+    background-color: #15455f; /* Medium purple */
+    color: #ffffff; /* White text */
+    border: 1px solid #000000; /* Black */
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
@@ -83,18 +86,18 @@ button,
 button:hover,
 .btn-primary:hover,
 .btn-secondary:hover {
-    background-color: #6a5acd; /* Slightly darker purple */
+    background-color: #103d52; /* Slightly darker purple */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 .btn-secondary {
-    background-color: #87ceeb; /* sky blue */
-    color: #000000; /* black */
+    background-color: #15455f; /* Sky blue */
+    color: #ffffff; /* Black */
 }
 
 .btn-secondary:hover {
-    background-color: #4682b4; /* steel blue */
-    color: #ffffff; /* white */
+    background-color: #cbd3dc; /* Steel blue */
+    color: #ffffff; /* White */
 }
 
 /* Responsive Design */
@@ -116,4 +119,5 @@ button:hover,
         font-size: 1rem;
     }
 }
+
 
