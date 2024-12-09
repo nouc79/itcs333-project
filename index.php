@@ -5,6 +5,14 @@ include 'includes/db.php';
 $sql = "SELECT * FROM rooms";
 $stmt = $pdo->query($sql);
 $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Example query to fetch data
+try {
+    $sql = "SELECT * FROM rooms"; // Use your actual table name
+    $stmt = $pdo->query($sql);
+    $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Error fetching data: " . $e->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,5 +45,7 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </body>
 </html>
+
+
 
 
