@@ -15,21 +15,8 @@ if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
 }
 
-// Create the database 
-$conn->query("CREATE DATABASE IF NOT EXISTS $dbname");
+// Select the database
 $conn->select_db($dbname);
-
-// Create the users table 
-$table_sql = "
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    profile_picture VARCHAR(255) DEFAULT NULL
-)";
-$conn->query($table_sql);
-
 // feedback
 $message = "";
 
@@ -43,7 +30,7 @@ if (isset($_POST['register'])) {
     if (!preg_match("/@stu\.uob\.edu\.bh$/", $email) && !preg_match("/@uob\.edu\.bh$/", $email)) {
         $message = "Please use a valid UoB email.";
     } else {
-        //  the password
+        // Hash the password
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Insert into the database
