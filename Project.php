@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Database connection setup
+// Database connection 
 $host = 'localhost';
 $username = 'root';
 $password = '';
@@ -15,11 +15,11 @@ if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
 }
 
-// Create the database if it doesn't exist
+// Create the database 
 $conn->query("CREATE DATABASE IF NOT EXISTS $dbname");
 $conn->select_db($dbname);
 
-// Create the users table if it doesn't exist
+// Create the users table 
 $table_sql = "
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -43,7 +43,7 @@ if (isset($_POST['register'])) {
     if (!preg_match("/@stu\.uob\.edu\.bh$/", $email) && !preg_match("/@uob\.edu\.bh$/", $email)) {
         $message = "Please use a valid UoB email.";
     } else {
-        // Hash the password
+        //  the password
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Insert into the database
