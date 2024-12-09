@@ -1,50 +1,54 @@
 <?php
 session_start();
 
-// Database connection
+// Database connection setup
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$dbname = 'your_database'; // Change this to your actual database name
+$dbname = 'user';
 
-$conn = new mysqli($host, $username, $password, $dbname);
+// Connect to the database
+$conn = new mysqli($host, $username, $password);
 
+// Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Database connection failed: " . $conn->connect_error);
 }
 
-$message = '';
+// Create the database if it doesn't exist
+$conn->query("CREATE DATABASE IF NOT EXISTS $dbname");
+$conn->select_db($dbname);
 
-// SQL to create the database and users table (run this in your database)
- /*
-CREATE DATABASE your_database;
-
-USE your_database;
-
-CREATE TABLE users (
+// Create the users table if it doesn't exist
+$table_sql = "
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    email VARCHAR(100) UNIQUE,
-    password VARCHAR(255),
-    profile_picture VARCHAR(255)
-);
-*/
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    profile_picture VARCHAR(255) DEFAULT NULL
+)";
+$conn->query($table_sql);
 
-// Handle registration
+// feedback
+$message = "";
+
+// Handle user registration
 if (isset($_POST['register'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Email validation for UoB email domains
+    // Validate email for UoB domains
     if (!preg_match("/@stu\.uob\.edu\.bh$/", $email) && !preg_match("/@uob\.edu\.bh$/", $email)) {
-        $message = "Invalid email address. Please use a UoB email address.";
+        $message = "Please use a valid UoB email.";
     } else {
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // Insert user into database
+        // Insert into the database
         $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $name, $email, $hashedPassword);
+        $stmt->bind_param("sss", $name, $email, $hashed_password);
 
         if ($stmt->execute()) {
             $message = "Registration successful!";
@@ -54,12 +58,12 @@ if (isset($_POST['register'])) {
     }
 }
 
-// Handle login
+// Handle user login
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Check if email exists in the database
+    // Check if user exists
     $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -73,129 +77,59 @@ if (isset($_POST['login'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_email'] = $user['email'];
-            header("Location: profile.php"); // Redirect to profile page after successful login
-            exit();
+            header("Location: profile.php");
         } else {
             $message = "Invalid password!";
         }
     } else {
-        $message = "No account found with that email!";
+        $message = "User not found!";
     }
 }
 
-// User Profile Management
+// Fetch user profile if logged in
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $user = $stmt->get_result()->fetch_assoc();
-
-    // Update user profile (name, email)
-    if (isset($_POST['update_profile'])) {
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-
-        // Update profile in database
-        $stmt = $conn->prepare("UPDATE users SET name = ?, email = ? WHERE id = ?");
-        $stmt->bind_param("ssi", $name, $email, $user_id);
-
-        if ($stmt->execute()) {
-            $message = "Profile updated successfully!";
-        } else {
-            $message = "Error: " . $stmt->error;
-        }
-    }
-
-    // Handle profile picture upload
-    if (isset($_POST['upload_picture'])) {
-        if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
-            $upload_dir = 'uploads/';
-            $file_name = $_FILES['profile_picture']['name'];
-            $file_tmp = $_FILES['profile_picture']['tmp_name'];
-            $file_path = $upload_dir . basename($file_name);
-
-            // Check if the file is an image
-            $image_info = getimagesize($file_tmp);
-            if ($image_info !== false) {
-                if (move_uploaded_file($file_tmp, $file_path)) {
-                    // Update profile picture in the database
-                    $stmt = $conn->prepare("UPDATE users SET profile_picture = ? WHERE id = ?");
-                    $stmt->bind_param("si", $file_path, $user_id);
-                    if ($stmt->execute()) {
-                        $message = "Profile picture updated successfully!";
-                    } else {
-                        $message = "Error updating profile picture!";
-                    }
-                } else {
-                    $message = "Failed to upload picture.";
-                }
-            } else {
-                $message = "Please upload a valid image file.";
-            }
-        }
-    }
-} else {
-    $message = "Please log in to access your profile.";
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Student Project - User System</title>
     <link rel="stylesheet" href="design.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration, Login & Profile Management</title>
 </head>
 <body>
-    <div class="form-container">
-        <h2>User Registration, Login & Profile Management</h2>
-        <div class="message"><?php echo $message; ?></div>
+<div class="container">
+    <h2>User System</h2>
+    <div><?php echo $message; ?></div>
 
-        <!-- Registration Form -->
-        <?php if (!isset($_SESSION['user_id'])): ?>
+    <?php if (!isset($_SESSION['user_id'])): ?>
+    <!-- Registration Form -->
+    <form method="POST" action="">
         <h3>Register</h3>
-        <form method="post" action="">
-            <input type="text" name="name" placeholder="Name" required>
-            <input type="email" name="email" placeholder="University Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit" name="register">Register</button>
-        </form>
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="University Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit" name="register">Register</button>
+    </form>
 
-        <hr>
-
-        <!-- Login Form -->
+    <!-- Login Form -->
+    <form method="POST" action="">
         <h3>Login</h3>
-        <form method="post" action="">
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit" name="login">Login</button>
-        </form>
-        <?php endif; ?>
-
-        <!-- User Profile Section -->
-        <?php if (isset($_SESSION['user_id'])): ?>
-        <h3>Edit Profile</h3>
-        <form method="post" action="" enctype="multipart/form-data">
-            <input type="text" name="name" value="<?php echo $user['name']; ?>" placeholder="Name" required>
-            <input type="email" name="email" value="<?php echo $user['email']; ?>" placeholder="Email" required>
-            <button type="submit" name="update_profile">Update Profile</button>
-        </form>
-
-        <hr>
-
-        <!-- Profile Picture Upload -->
-        <h3>Change Profile Picture</h3>
-        <form method="post" action="" enctype="multipart/form-data">
-            <input type="file" name="profile_picture" accept="image/*" required>
-            <button type="submit" name="upload_picture">Upload Picture</button>
-        </form>
-
-        <div class="profile-picture">
-            <img src="<?php echo isset($user['profile_picture']) ? $user['profile_picture'] : 'default-profile.png'; ?>" alt="Profile Picture" width="150">
-        </div>
-        <?php endif; ?>
-    </div>
+        <input type="email" name="email" placeholder="University Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit" name="login">Login</button>
+    </form>
+    <?php else: ?>
+    <!-- Profile Section -->
+    <h3>Welcome, <?php echo $user['name']; ?></h3>
+    <p>Email: <?php echo $user['email']; ?></p>
+    <a href="logout.php">Logout</a>
+    <?php endif; ?>
+</div>
 </body>
 </html>

@@ -1,9 +1,13 @@
+/* General body styling */
 body {
     background-color: #f0f8ff; /* baby blue */
     color: #000000; /* black */
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
+/* Form container styling */
 .form-container {
     background-color: #87ceeb; /* sky blue */
     color: #ffffff; /* white */
@@ -11,38 +15,60 @@ body {
     border: 2px solid #000000; /* black */
     width: 50%;
     margin: 0 auto;
+    border-radius: 10px; /* rounded corners for form */
 }
 
+/* Message box styling */
 .message {
     background-color: #9370db; /* medium purple */
     color: #ffffff; /* white */
     padding: 10px;
     margin-bottom: 10px;
+    border-radius: 5px; /* rounded corners for message */
 }
 
+/* Input and button styling */
 input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="file"],
 button {
     margin: 5px 0;
-    padding: 8px;
-    border: 1px solid #000000; /* black */
+    padding: 10px; /* added more padding for better usability */
+    border: 1px solid #000000; /* black border */
     border-radius: 5px;
+    width: 100%; /* make inputs full width */
+    box-sizing: border-box; /* ensure padding doesn't affect width */
 }
 
+/* Button styling */
 button {
     background-color: #9370db; /* medium purple */
     color: #ffffff; /* white */
     cursor: pointer;
+    font-size: 16px;
 }
 
-input[type="file"] {
-    padding: 5px;
+/* Input field on focus */
+input:focus, button:focus {
+    outline: 2px solid #000000; /* black outline for focus */
 }
 
+/* Button hover effect */
+button:hover {
+    background-color: #6a5acd; /* dark purple on hover */
+}
+
+/* Profile picture styling */
 .profile-picture img {
     margin-top: 10px;
-    border: 2px solid #000000; /* black */
-    border-radius: 50%;
+    border: 2px solid #000000; /* black border */
+    border-radius: 50%; /* circular profile picture */
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .form-container {
+        width: 90%; /* make form take up more width on small screens */
+    }
 }
