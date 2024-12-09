@@ -1,7 +1,9 @@
 /* General body styling */
 body {
-    background-color: #f0f8ff; 
-    color: #000000;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    color: #000000; 
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -9,19 +11,19 @@ body {
 
 /* Form container styling */
 .form-container {
-    background-color: #87ceeb; 
+    background-color: #cbd3dc; 
     color: #ffffff; 
     padding: 20px;
     border: 2px solid #000000; 
     width: 50%;
     margin: 0 auto;
-    border-radius: 10px; 
+    border-radius: 10px;
 }
 
 /* Message box styling */
 .message {
-    background-color: #9370db; 
-    color: #ffffff; 
+    background-color: rgba(245, 245, 220, 0.85); 
+    color: #000000; 
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -34,29 +36,30 @@ input[type="password"],
 input[type="file"],
 button {
     margin: 5px 0;
-    padding: 10px; 
+    padding: 10px;
     border: 1px solid #000000; 
     border-radius: 5px;
-    width: 100%; 
+    width: 100%;
     box-sizing: border-box; 
 }
 
 /* Button styling */
 button {
-    background-color: #9370db; 
-    color: #ffffff; 
+    background-color: #15455f; 
+    color:#ffffff ;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
 }
 
 /* Input field on focus */
-input:focus,button:focus {
+input:focus, button:focus {
     outline: 2px solid #000000; 
 }
 
 /* Button hover effect */
 button:hover {
-    background-color: #6a5acd; 
+    background-color: #103d52; 
 }
 
 /* Profile picture styling */
