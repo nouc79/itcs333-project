@@ -72,7 +72,38 @@ if (isset($_POST['login'])) {
         $message = "User not found!";
     }
 }
+    // Handle profile picture upload
+if (isset($_POST['upload_picture']) && isset($_SESSION['user_id']))
+    $user_id = $_SESSION['user_id'];
 
+    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
+        $target_dir = "uploads/";
+        $file_name = basename($_FILES["profile_picture"]["name"]);
+        $target_file = $target_dir . uniqid() . "_" . $file_name;
+        $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        // Validate file type (allow only jpg, jpeg, png, gif)
+        $allowed_types = ["jpg", "jpeg", "png", "gif"];
+        if (in_array($file_type, $allowed_types)) {
+            // Move uploaded file to target directory
+            if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
+                // Update profile picture in the database
+                $stmt = $conn->prepare("UPDATE users SET profile_picture = ? WHERE id = ?");
+                $stmt->bind_param("si", $target_file, $user_id);
+                if ($stmt->execute()) {
+                    $message = "Profile picture uploaded successfully!";
+                } else {
+                    $message = "Error updating profile picture in database.";
+                }
+            } else {
+                $message = "Error uploading the file.";
+            }
+        } else {
+            $message = "Invalid file type. Only JPG, JPEG, PNG, and GIF are allowed.";
+        }
+    } else {
+        $message = "No file uploaded or file upload error.";
+    }
 // Fetch user profile if logged in
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
@@ -115,6 +146,23 @@ if (isset($_SESSION['user_id'])) {
     <!-- Profile Section -->
     <h3>Welcome, <?php echo $user['name']; ?></h3>
     <p>Email: <?php echo $user['email']; ?></p>
+
+    <!-- Profile Picture Display -->
+    <div class="profile-picture">
+        <?php if (!empty($user['profile_picture'])): ?>
+            <img src="<?php echo $user['profile_picture']; ?>" alt="Profile Picture" width="150" height="150">
+        <?php else: ?>
+            <img src="default-profile.png" alt="Default Profile Picture" width="150" height="150">
+        <?php endif; ?>
+    </div>
+
+    <!-- Profile Picture Upload Form -->
+    <form method="POST" action="" enctype="multipart/form-data">
+        <label for="profile_picture">Upload Profile Picture:</label>
+        <input type="file" name="profile_picture" id="profile_picture" accept="image/*">
+        <button type="submit" name="upload_picture">Upload</button>
+    </form>
+
     <a href="logout.php">Logout</a>
     <?php endif; ?>
 </div>
