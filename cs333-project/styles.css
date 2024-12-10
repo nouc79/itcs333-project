@@ -1,0 +1,122 @@
+
+/* General Styles */
+body {
+    background-image: url('../assets/room4.jpg'); /* Set room4.jpg as background */
+    background-size: cover; /* Ensure the background covers the entire page */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent tiling */
+    color: #000000; /* Black text */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container Room browsing */ 
+.container {
+    background-color: #cbd3dc; /* Sky blue with slight transparency */
+    color: #ffffff; /* White text */
+    padding: 20px;
+    border: 2px solid #000000; /* Black */
+    border-radius: 10px;
+    max-width: 900px;
+    margin: 50px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+/* Page Headers */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #000000; /* Black text */
+}
+
+/* Paragraphs and Strong Text */
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #474748; /* White text */
+    margin-bottom: 10px;
+}
+
+strong {
+    color: #000000; /* Black for emphasis */
+}
+
+/* Card Styling (index.php) */
+.card {
+    background-color: rgba(245, 245, 220, 0.85); /* Light beige with slight transparency */
+    color: #000000; /* Black text */
+    border: 2px solid #000000; /* Black */
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Lift effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow */
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+button,
+.btn-primary,
+.btn-secondary {
+    background-color: #15455f; /* Medium purple */
+    color: #ffffff; /* White text */
+    border: 1px solid #000000; /* Black */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
+    text-decoration: none; /* For anchor buttons */
+}
+
+button:hover,
+.btn-primary:hover,
+.btn-secondary:hover {
+    background-color: #103d52; /* Slightly darker purple */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary {
+    background-color: #15455f; /* Sky blue */
+    color: #ffffff; /* Black */
+}
+
+.btn-secondary:hover {
+    background-color: #cbd3dc; /* Steel blue */
+    color: #ffffff; /* White */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .card {
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
