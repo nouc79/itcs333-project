@@ -63,16 +63,6 @@ $admin_name = $_SESSION['admin_name'];
             </div>
         </div>
 
-        <!-- View Bookings -->
-        <div class="col-md-6 mb-4">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h5 class="card-title">View Bookings</h5>
-                    <p class="card-text">See all room bookings.</p>
-                    <a href="view_bookings.php" class="btn btn-primary">View Bookings</a>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
