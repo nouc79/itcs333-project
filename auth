@@ -1,0 +1,14 @@
+<?php
+session_start();
+
+// Redirect if the user is not logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Redirect non-admins trying to access admin pages
+if (isset($isAdminPage) && $_SESSION['user_type'] !== 'admin') {
+    header("Location: index.php");
+    exit();
+}
