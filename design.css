@@ -1,0 +1,115 @@
+/* General body styling */
+body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #333333; /* Softer text color for readability */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6; /* Better spacing between lines */
+}
+
+/* Form container styling */
+.form-container {
+    background-color: #ffffff; /* Clean white background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border: 1px solid #e0e0e0; /* Light border for structure */
+    padding: 30px;
+    width: 50%;
+    margin: 40px auto; /* Centered with vertical spacing */
+    border-radius: 10px;
+}
+
+/* Form heading */
+.form-container h1 {
+    font-size: 24px;
+    color: #15455f; /* Formal, professional color */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Message box styling */
+.message {
+    background-color: rgba(240, 240, 240, 0.95); /* Light, neutral tone */
+    color: #333333;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border-left: 4px solid #15455f; /* Accent border for emphasis */
+    font-size: 14px;
+}
+
+/* Input and button styling */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"],
+button {
+    margin: 10px 0;
+    padding: 12px;
+    border: 1px solid #cccccc; /* Softer border */
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #333333;
+}
+
+/* Button styling */
+button {
+    background-color: #15455f;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
+    border: none;
+    padding: 12px;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #0d3a4a;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Input field on focus */
+input:focus,
+button:focus {
+    outline: none;
+    box-shadow: 0 0 5px #15455f; /* Soft focus effect */
+    border: 1px solid #15455f;
+}
+
+/* Profile picture styling */
+.profile-picture img {
+    margin-top: 20px;
+    border: 3px solid #cccccc;
+    border-radius: 50%;
+    width: 120px; /* Defined size for consistency */
+    height: 120px;
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; /* Centered profile picture */
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .form-container {
+        width: 90%;
+        padding: 20px;
+    }
+    
+    button {
+        font-size: 14px;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="file"] {
+        font-size: 13px;
+    }
+}
